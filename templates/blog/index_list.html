@@ -5,7 +5,7 @@
   <div class="card mb-4">
     {% for post in post_list %}
     <div class="card-body">
-      <h2 class=card-title">
+      <h2 class="card-title">
         <a href="{% url 'blog:post-detail' pk=post.id %}" class="card-link text-decoration-none">{{ post.title }}</a>
       </h2>
       <hr>

@@ -22,26 +22,25 @@ class PostDetailView(generic.DetailView):
 
     def post(self, request, *args, **kwargs):
         post = self.get_object()
-        if request.method == "POST":
-            form = CommentaryModelForm(request.POST)
+        form = CommentaryModelForm(request.POST)
 
-            if not request.user.is_authenticated:
-                form.add_error(None, "You are not allowed")
-                context = {
-                    "form": form,
-                    "post": post,
-                }
-                return render(request, "blog/post_detail.html",
-                              context=context)
+        if not request.user.is_authenticated:
+            form.add_error(None, "You are not allowed")
+            context = {
+                "form": form,
+                "post": post,
+            }
+            return render(request, "blog/post_detail.html",
+                            context=context)
 
-            if form.is_valid():
-                comment = form.save(commit=False)
-                comment.user = request.user
-                comment.post = post
-                comment.save()
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.post = post
+            comment.save()
 
-                return redirect("blog:post-detail", pk=post.id)
+            return redirect("blog:post-detail", pk=post.id)
         return render(request, "blog/post_detail.html", context={
-            "form": CommentaryModelForm(),
+            "form": form,
             "post": post,
         })
