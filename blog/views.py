@@ -31,7 +31,7 @@ class PostDetailView(generic.DetailView):
                 "post": post,
             }
             return render(request, "blog/post_detail.html",
-                            context=context)
+                        context=context)
 
         if form.is_valid():
             comment = form.save(commit=False)
